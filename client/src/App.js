@@ -1,11 +1,17 @@
-import './App.css';
+import "./App.css";
+import { Route, BrowserRouter, Routes } from "react-router-dom";
+import MainLayout from "./Layouts/mainLayout";
+import Products from "./Pages/Product/products";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<Products />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
