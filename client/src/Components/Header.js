@@ -13,8 +13,8 @@ export default function Header() {
 
   return (
     <div className="font-pacifico w-full flex justify-center text-amber-800">
-      <div className="w-[90%] flex flex-row flex flex-row justify-between items-center border-b border-gray-200 py-4">
-        <div className="flex">
+      <div className="w-[90%] flex flex-row justify-between items-center border-b border-gray-200 py-4">
+        <div className="flex flex-1">
           <img src={Logo} alt="" className="w-12" />
         </div>
         <div className="flex flex-row gap-4">
@@ -25,7 +25,7 @@ export default function Header() {
             <div>Manufacturers</div>
           </Link>
         </div>
-        <div className="flex flex-row gap-6">
+        <div className="flex-1 flex flex-row gap-6 justify-end">
           {isAdmin && <FontAwesomeIcon icon={faCookie} size="2x" />}
           {isAdmin && <FontAwesomeIcon icon={faLayerGroup} size="2x" />}
           <FontAwesomeIcon icon={faRightFromBracket} size="2x" />
