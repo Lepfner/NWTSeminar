@@ -7,6 +7,9 @@ import ProductDetails from "./Pages/Product/productDetails";
 import AuthLayout from "./Layouts/authLayout";
 import Login from "./Pages/Auth/Login";
 import Register from "./Pages/Auth/Register";
+import ManufacturerDetails from "./Pages/Manufacturer/manufacturerDetails";
+import NewProduct from "./Pages/Product/newProduct";
+import NewManufacturer from "./Pages/Manufacturer/newManufacturer";
 
 function App() {
   return (
@@ -16,11 +19,14 @@ function App() {
           <Route path="/products" element={<Products />} />
           <Route path="/manufacturers" element={<Manufacturers />} />
           <Route path="/product/:id" element={<ProductDetails/>} />
+          <Route path="/manufacturer/:id" element={<ManufacturerDetails/>} />
         </Route>
         <Route element={<AuthLayout/>}>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Route>
+        <Route path="/newProduct" element={<NewProduct/>} />
+        <Route path="/newManufacturer" element={<NewManufacturer/>} />
       </Routes>
     </BrowserRouter>
   );

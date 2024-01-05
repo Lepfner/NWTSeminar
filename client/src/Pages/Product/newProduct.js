@@ -1,0 +1,109 @@
+import React, { useState } from "react";
+import { Toaster } from "react-hot-toast";
+const initialData = {
+  name: "",
+  price: "",
+  image: "",
+  type: "",
+  desc: "",
+  ingredients: "",
+};
+
+function NewProduct() {
+  const [formData, setFormData] = useState(initialData);
+
+  const updateData = (fields) => {
+    setFormData((prev) => {
+      return { ...prev, ...fields };
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  return (
+    <div className="font-pacifico w-full flex flex-col items-center justify-between">
+      <Toaster />
+      <div className="h-12 w-full bg-[#50251f] mb-8" />
+      <div
+        className="h-full flex flex-col justify-center max-w-[75%]
+                     outline outline-[#50251f] outline-[1rem] rounded-xl z-0
+                     w-[100%]"
+      >
+        <div className="w-full rounded-xl z-10">
+          <div className="flex justify-center items-center">
+            <form
+              className="flex justify-center items-center flex-col lg: w-4/5 max-md:w-full"
+              onSubmit={handleSubmit}
+            >
+              <p className="lg:text-3xl md: text-2xl sm: text-xl">Name:</p>
+              <input
+                required
+                value={formData.name}
+                onChange={(e) => updateData({ name: e.target.value })}
+                type="text"
+                placeholder="Name"
+                className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
+              />
+              <p className="lg:text-3xl  md: text-2xl sm: text-xl">
+                Price:
+              </p>
+              <input
+                required
+                value={formData.price}
+                onChange={(e) => updateData({ price: e.target.value })}
+                type="text"
+                placeholder="Price"
+                className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
+              />
+              <p className="lg:text-3xl  md: text-2xl sm: text-xl">
+                Image URL:
+              </p>
+              <input
+                required
+                value={formData.image}
+                onChange={(e) => updateData({ image: e.target.value })}
+                type="text"
+                placeholder="Image URL"
+                className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
+              />
+              <p className="lg:text-3xl  md: text-2xl sm: text-xl">Type:</p>
+              <input
+                required
+                value={formData.type}
+                onChange={(e) => updateData({ type: e.target.value })}
+                type="text"
+                placeholder="Type"
+                className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
+              />
+              <p className="lg:text-3xl  md: text-2xl sm: text-xl">
+                Description:
+              </p>
+              <input
+                required
+                value={formData.desc}
+                onChange={(e) => updateData({ desc: e.target.value })}
+                type="text"
+                placeholder="Description"
+                className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
+              />
+              <p className="lg:text-3xl  md: text-2xl sm: text-xl">
+                Ingredients:
+              </p>
+              <input
+                required
+                value={formData.ingredients}
+                onChange={(e) => updateData({ ingredients: e.target.value })}
+                type="text"
+                placeholder="Ingredients"
+                className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
+              />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+export default NewProduct;

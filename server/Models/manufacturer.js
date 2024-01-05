@@ -17,6 +17,10 @@ const manufacturerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  year: {
+    type: Number,
+    required: true,
+  }
 });
 
 const Manufacturer = mongoose.model('Manufacturer', manufacturerSchema);

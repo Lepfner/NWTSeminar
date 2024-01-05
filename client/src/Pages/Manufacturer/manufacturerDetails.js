@@ -3,7 +3,7 @@ import "../../Styles/wave.css";
 import Dorina from "../../Assets/dorina.png";
 import "animate.css";
 
-export default function ProductDetails() {
+export default function ManufacturerDetails() {
   return (
     <div className="font-pacifico w-full h-full flex flex-col justify-center relative">
       <div className="flex justify-center">

@@ -15,10 +15,12 @@ export default function Header() {
     <div className="font-pacifico w-full flex justify-center text-amber-800">
       <div className="w-[90%] flex flex-row justify-between items-center border-b border-gray-200 py-4">
         <div className="flex flex-1">
-          <img src={Logo} alt="" className="w-12" />
+          <Link to="/products">
+            <img src={Logo} alt="" className="w-12" />
+          </Link>
         </div>
         <div className="flex flex-row gap-4">
-          <Link to="/">
+          <Link to="/products">
             <div>Products</div>
           </Link>
           <Link to="/manufacturers">
@@ -26,8 +28,12 @@ export default function Header() {
           </Link>
         </div>
         <div className="flex-1 flex flex-row gap-6 justify-end">
-          {isAdmin && <FontAwesomeIcon icon={faCookie} size="2x" />}
-          {isAdmin && <FontAwesomeIcon icon={faLayerGroup} size="2x" />}
+          <Link to="/newProduct">
+            {isAdmin && <FontAwesomeIcon icon={faCookie} size="2x" />}
+          </Link>
+          <Link to="/newManufacturer">
+            {isAdmin && <FontAwesomeIcon icon={faLayerGroup} size="2x" />}
+          </Link>
           <FontAwesomeIcon icon={faRightFromBracket} size="2x" />
         </div>
       </div>

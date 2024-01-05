@@ -1,8 +1,20 @@
 const mongoose = require('mongoose');
 
 const chocolateSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  },
   price: {
     type: Number,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  logo: {
+    type: String,
     required: true,
   },
   type: {
@@ -10,7 +22,7 @@ const chocolateSchema = new mongoose.Schema({
     required: true,
   },
   ingredients: {
-    type: [String], // Assuming multiple ingredients in an array
+    type: String,
     required: true,
   },
   manufacturer: {
