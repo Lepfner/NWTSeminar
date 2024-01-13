@@ -8,7 +8,7 @@ export default function Products() {
   return (
     <div className="font-pacifico w-full h-full flex flex-col justify-center relative">
       <div className="flex justify-center">
-        <div className="w-[90%] absolute top-0 flex flex-row justify-evenly mt-24">
+        <div className="w-[90%] absolute top-0 grid grid-cols-3 justify-items-center mt-24">
           <div className="animate__animated animate__fadeInDown animate__delay-1s">
             <img
               alt=""
@@ -20,6 +20,16 @@ export default function Products() {
             <h1 className="pl-2 text-3xl text-white">1.00 €</h1>
           </div>
           <div className="animate__animated animate__fadeInDown animate__delay-2s">
+            <img
+              alt=""
+              src={Dorina}
+              className="bg-gray-200 py-12 px-4 opacity-90
+          hover:opacity-100 duration-500 hover:h-[32rem] hover:w-[24rem] rounded-xl h-96 w-80"
+            />
+            <h1 className="pl-2 text-3xl text-white">Dorina</h1>
+            <h1 className="pl-2 text-3xl text-white">1.00 €</h1>
+          </div>
+          <div className="animate__animated animate__fadeInDown animate__delay-3s">
             <img
               alt=""
               src={Dorina}

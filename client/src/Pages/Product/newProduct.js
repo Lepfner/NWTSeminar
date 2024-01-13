@@ -46,9 +46,7 @@ function NewProduct() {
                 placeholder="Name"
                 className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
               />
-              <p className="lg:text-3xl  md: text-2xl sm: text-xl">
-                Price:
-              </p>
+              <p className="lg:text-3xl  md: text-2xl sm: text-xl">Price:</p>
               <input
                 required
                 value={formData.price}
@@ -99,6 +97,13 @@ function NewProduct() {
                 placeholder="Ingredients"
                 className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
               />
+              <button
+                type="submit"
+                className="block bg-[#50251f] px-4 rounded-md p-2 my-2 text-white 
+                                  hover:bg-[#331713]"
+              >
+                Create
+              </button>
             </form>
           </div>
         </div>

@@ -8,7 +8,7 @@ export default function Manufacturers() {
   return (
     <div className="font-pacifico w-full h-full flex flex-col justify-center relative">
       <div className="flex justify-center">
-        <div className="w-[90%] absolute top-0 flex flex-row justify-evenly mt-24">
+        <div className="w-[90%] absolute top-0 grid grid-cols-3 justify-items-center mt-24">
           <div className="animate__animated animate__fadeInDown animate__delay-1s">
             <img
               alt=""

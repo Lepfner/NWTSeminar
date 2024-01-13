@@ -10,7 +10,6 @@ const initialData = {
 };
 
 function NewManufacturer() {
-
   const updateData = (fields) => {
     //setFormData((prev) => {
     //  return { ...prev, ...fields };
@@ -45,9 +44,7 @@ function NewManufacturer() {
                 placeholder="Name"
                 className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
               />
-              <p className="lg:text-3xl  md: text-2xl sm: text-xl">
-                City:
-              </p>
+              <p className="lg:text-3xl  md: text-2xl sm: text-xl">City:</p>
               <input
                 required
                 value={initialData.name}
@@ -87,6 +84,13 @@ function NewManufacturer() {
                 placeholder="Description"
                 className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
               />
+              <button
+                type="submit"
+                className="block bg-[#50251f] px-4 rounded-md p-2 my-2 text-white 
+                                  hover:bg-[#331713]"
+              >
+                Create
+              </button>
             </form>
           </div>
         </div>
