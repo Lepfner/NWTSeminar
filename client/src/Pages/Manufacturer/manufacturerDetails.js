@@ -1,9 +1,37 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "../../Styles/wave.css";
 import Dorina from "../../Assets/dorina.png";
 import "animate.css";
+import axios from '../../api/axios'
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 export default function ManufacturerDetails() {
+
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const [manufacturerData, setManufacturerData] = useState({});
+
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`/manufacturers/${id}`);
+      navigate("/manufacturers")
+    } catch (error) {
+      console.error('Error deleting manufacturer:', error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchManufacturerData = async () => {
+      try {
+        const response = await axios.get(`/manufacturer/${window.location.href.slice(39,65)}`);
+        setManufacturerData(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchManufacturerData();
+  }, []);
 
   return (
     <div className="font-pacifico w-full h-full flex flex-col justify-center relative">
@@ -18,21 +46,22 @@ export default function ManufacturerDetails() {
               />
               <div className="flex flex-col items-start">
                 <h1 className="text-3xl text-white">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Maecenas quis ex eget enim eleifend mollis at a mi. Fusce
-                  accumsan massa diam, a luctus mi rhoncus in. Phasellus commodo
-                  finibus mi id consequat. Nam leo justo, faucibus et neque ut,
-                  bibendum venenatis lacus. Praesent vitae mollis ex. Nunc vitae
-                  tellus sed ligula rutrum varius eget cursus enim. Fusce
-                  venenatis erat at tellus sollicitudin, interdum finibus ex
-                  sodales. Sed ac dolor tincidunt, feugiat ante nec, facilisis
-                  nunc. In hac habitasse platea dictumst. Etiam interdum commodo
-                  est. Etiam sem nisl, egestas ac ante dapibus, pharetra sodales
-                  libero. Nulla facilisi.
+                  {manufacturerData.name}
+                </h1>
+                <h1 className="text-3xl text-white">
+                  {manufacturerData.city}
+                </h1>
+                <h1 className="text-3xl text-white">
+                  {manufacturerData.description}
+                </h1>
+                <h1 className="text-3xl text-white">
+                  Founded: {manufacturerData.year}
                 </h1>
                 <div>
-                  <button className="border border-solid border-white py-2 px-4 rounded-xl text-white duration-500 hover:text-black hover:bg-white mt-10 mr-4">Edit</button>
-                  <button className="border border-solid border-white py-2 px-4 rounded-xl text-white duration-500 hover:text-black hover:bg-white mt-10">Delete</button>
+                  <Link to={`/editManufacturer/${id}`}>
+                    <button className="border border-solid border-white py-2 px-4 rounded-xl text-white duration-500 hover:text-black hover:bg-white mt-10 mr-4">Edit</button>
+                  </Link>
+                  <button onClick={handleDelete} className="border border-solid border-white py-2 px-4 rounded-xl text-white duration-500 hover:text-black hover:bg-white mt-10">Delete</button>
                 </div>
               </div>
             </div>

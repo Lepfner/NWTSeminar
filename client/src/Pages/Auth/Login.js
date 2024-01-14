@@ -1,6 +1,5 @@
 import SuccessPage from "./SuccessPage";
 import axios from "../../api/axios";
-//import useAuth from "../../hooks/useAuth";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Typewriter from "typewriter-effect";
@@ -11,7 +10,6 @@ const Login = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const navigate = useNavigate();
-  //const { setAuth, isLoggedIn, setIsLoggedIn } = useAuth();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -26,6 +24,7 @@ const Login = () => {
       );
       setIsLoggedIn(true);
       const { is_admin } = response?.data;
+      navigate("/products")
       if (is_admin) {
         navigate("/products", {state: is_admin});
       } else {

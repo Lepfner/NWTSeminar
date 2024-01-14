@@ -10,6 +10,8 @@ import Register from "./Pages/Auth/Register";
 import ManufacturerDetails from "./Pages/Manufacturer/manufacturerDetails";
 import NewProduct from "./Pages/Product/newProduct";
 import NewManufacturer from "./Pages/Manufacturer/newManufacturer";
+import { EditManufacturer } from "./Pages/Manufacturer/editManufacturer";
+import EditProduct from './Pages/Product/editProduct'
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
         </Route>
         <Route path="/newProduct" element={<NewProduct/>} />
         <Route path="/newManufacturer" element={<NewManufacturer/>} />
+        <Route path="/editProduct/:id" element={<EditProduct/>} />
+        <Route path="/editManufacturer/:id" element={<EditManufacturer/>} />
       </Routes>
     </BrowserRouter>
   );

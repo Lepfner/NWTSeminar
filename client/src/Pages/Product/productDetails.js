@@ -2,8 +2,23 @@ import React from "react";
 import "../../Styles/wave.css";
 import Dorina from "../../Assets/dorina.png";
 import "animate.css";
+import axios from '../../api/axios'
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 export default function ProductDetails() {
+
+  const { id } = useParams();
+  const navigate = useNavigate()
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`/chocolates/${id}`);
+      navigate("/products")
+    } catch (error) {
+      console.error('Error deleting manufacturer:', error);
+    }
+  };
+
   return (
     <div className="font-pacifico w-full h-full flex flex-col justify-center relative">
       <div className="flex justify-center">
@@ -30,8 +45,10 @@ export default function ProductDetails() {
                   libero. Nulla facilisi.
                 </h1>
                 <div>
-                  <button className="border border-solid border-white py-2 px-4 rounded-xl text-white duration-500 hover:text-black hover:bg-white mt-10 mr-4">Edit</button>
-                  <button className="border border-solid border-white py-2 px-4 rounded-xl text-white duration-500 hover:text-black hover:bg-white mt-10">Delete</button>
+                <Link to={`/editProduct/${id}`}>
+                    <button className="border border-solid border-white py-2 px-4 rounded-xl text-white duration-500 hover:text-black hover:bg-white mt-10 mr-4">Edit</button>
+                </Link>
+                  <button onClick={handleDelete} className="border border-solid border-white py-2 px-4 rounded-xl text-white duration-500 hover:text-black hover:bg-white mt-10">Delete</button>
                 </div>
               </div>
             </div>

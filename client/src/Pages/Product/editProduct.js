@@ -1,7 +1,9 @@
 import React from 'react'
 
-export default function EditProduct() {
+function EditProduct() {
   return (
     <div>Edit</div>
   )
 }
+
+export default EditProduct

@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const mongoose = require('mongoose');
 const Manufacturer = require("../models/Manufacturer");
 
 router.get('/manufacturers', async (req, res) => {
@@ -8,6 +9,19 @@ router.get('/manufacturers', async (req, res) => {
     res.status(200).json(manufacturers);
   } catch (error) {
     res.status(500).json({ message: error });
+  }
+});
+
+router.get('/manufacturer/:id', async (req, res) => {
+  try {
+    const manufacturer = await Manufacturer.findById(req.params.id);
+
+    if (!manufacturer) {
+      return res.status(404).json({ message: 'Manufacturer not found' });
+    }
+    res.status(200).json(manufacturer);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
 
@@ -33,11 +47,9 @@ router.put("/manufacturers/:id", async (req, res) => {
       req.body,
       { new: true }
     );
-
     if (!updatedManufacturer) {
       return res.status(404).json({ message: "Manufacturer not found" });
     }
-
     res.status(200).json(updatedManufacturer);
   } catch (error) {
     res.status(500).json({ message: error });
@@ -46,14 +58,12 @@ router.put("/manufacturers/:id", async (req, res) => {
 
 router.delete("/manufacturers/:id", async (req, res) => {
   try {
-    const deletedManufacturer = await Manufacturer.findByIdAndRemove(
+    const deletedManufacturer = await Manufacturer.findByIdAndDelete(
       req.params.id
     );
-
     if (!deletedManufacturer) {
       return res.status(404).json({ message: "Manufacturer not found" });
     }
-
     res.status(200).json({ message: "Manufacturer deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: error });
