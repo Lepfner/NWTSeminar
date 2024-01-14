@@ -4,6 +4,7 @@ import Dorina from "../../Assets/dorina.png";
 import "animate.css";
 
 export default function ManufacturerDetails() {
+
   return (
     <div className="font-pacifico w-full h-full flex flex-col justify-center relative">
       <div className="flex justify-center">
@@ -29,7 +30,10 @@ export default function ManufacturerDetails() {
                   est. Etiam sem nisl, egestas ac ante dapibus, pharetra sodales
                   libero. Nulla facilisi.
                 </h1>
-                <button className="border border-solid border-white py-2 px-4 rounded-xl text-white duration-500 hover:text-black hover:bg-white mt-10">Edit</button>
+                <div>
+                  <button className="border border-solid border-white py-2 px-4 rounded-xl text-white duration-500 hover:text-black hover:bg-white mt-10 mr-4">Edit</button>
+                  <button className="border border-solid border-white py-2 px-4 rounded-xl text-white duration-500 hover:text-black hover:bg-white mt-10">Delete</button>
+                </div>
               </div>
             </div>
           </div>

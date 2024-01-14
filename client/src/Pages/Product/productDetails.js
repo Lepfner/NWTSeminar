@@ -29,7 +29,10 @@ export default function ProductDetails() {
                   est. Etiam sem nisl, egestas ac ante dapibus, pharetra sodales
                   libero. Nulla facilisi.
                 </h1>
-                <button className="border border-solid border-white py-2 px-4 rounded-xl text-white duration-500 hover:text-black hover:bg-white mt-10">Edit</button>
+                <div>
+                  <button className="border border-solid border-white py-2 px-4 rounded-xl text-white duration-500 hover:text-black hover:bg-white mt-10 mr-4">Edit</button>
+                  <button className="border border-solid border-white py-2 px-4 rounded-xl text-white duration-500 hover:text-black hover:bg-white mt-10">Delete</button>
+                </div>
               </div>
             </div>
           </div>

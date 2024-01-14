@@ -27,6 +27,10 @@ app.options('*', cors(corsOptions));
 
 const authRouter = require("./routes/auth");
 app.use("/", authRouter);
+const productRouter = require("./routes/product");
+app.use("/", productRouter);
+const manufacturerRouter = require("./routes/manufacturer");
+app.use("/", manufacturerRouter);
 app.listen(8000, () => { console.log("Server started on port 8000")});
 
 app.get("/", (req, res) => res.send("index"));

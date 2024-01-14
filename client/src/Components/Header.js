@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Logo from "../Assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -6,10 +6,10 @@ import {
   faRightFromBracket,
   faLayerGroup,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom';
 
 export default function Header() {
-  const [isAdmin, setIsAdmin] = useState(true);
+  const location = useLocation();
 
   return (
     <div className="font-pacifico w-full flex justify-center text-amber-800">
@@ -29,10 +29,10 @@ export default function Header() {
         </div>
         <div className="flex-1 flex flex-row gap-6 justify-end">
           <Link to="/newProduct">
-            {isAdmin && <FontAwesomeIcon icon={faCookie} size="2x" />}
+            {location.state && <FontAwesomeIcon icon={faCookie} size="2x" />}
           </Link>
           <Link to="/newManufacturer">
-            {isAdmin && <FontAwesomeIcon icon={faLayerGroup} size="2x" />}
+            {location.state && <FontAwesomeIcon icon={faLayerGroup} size="2x" />}
           </Link>
           <FontAwesomeIcon icon={faRightFromBracket} size="2x" />
         </div>

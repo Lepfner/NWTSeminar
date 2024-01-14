@@ -1,23 +1,34 @@
-import React from "react";
+import React, {useState} from "react";
+import axios from "../../api/axios";
 import { Toaster } from "react-hot-toast";
-const initialData = {
-  name: "",
-  price: "",
-  image: "",
-  type: "",
-  desc: "",
-  ingredients: "",
-};
+import { useNavigate } from "react-router-dom";
 
 function NewManufacturer() {
-  const updateData = (fields) => {
-    //setFormData((prev) => {
-    //  return { ...prev, ...fields };
-    //});
+
+  const navigate = useNavigate();
+
+  const [manufacturerData, setManufacturerData] = useState({
+    name: '',
+    city: '',
+    description: '',
+    logo: '',
+    year: 0,
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setManufacturerData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    try {
+      const response = await axios.post('/manufacturerCreate', manufacturerData);
+      navigate("/manufacturers");
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   return (
@@ -38,39 +49,21 @@ function NewManufacturer() {
               <p className="lg:text-3xl  md: text-2xl sm: text-xl">Name:</p>
               <input
                 required
-                value={initialData.name}
-                onChange={(e) => updateData({ name: e.target.value })}
+                value={manufacturerData.name}
+                onChange={handleInputChange}
                 type="text"
+                name="name"
                 placeholder="Name"
                 className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
               />
               <p className="lg:text-3xl  md: text-2xl sm: text-xl">City:</p>
               <input
                 required
-                value={initialData.name}
-                onChange={(e) => updateData({ name: e.target.value })}
+                value={manufacturerData.city}
+                onChange={handleInputChange}
                 type="text"
+                name="city"
                 placeholder="Price"
-                className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
-              />
-              <p className="lg:text-3xl  md: text-2xl sm: text-xl">
-                Image URL:
-              </p>
-              <input
-                required
-                value={initialData.name}
-                onChange={(e) => updateData({ name: e.target.value })}
-                type="text"
-                placeholder="Image URL"
-                className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
-              />
-              <p className="lg:text-3xl  md: text-2xl sm: text-xl">Year:</p>
-              <input
-                required
-                value={initialData.name}
-                onChange={(e) => updateData({ name: e.target.value })}
-                type="text"
-                placeholder="Type"
                 className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
               />
               <p className="lg:text-3xl  md: text-2xl sm: text-xl">
@@ -78,10 +71,33 @@ function NewManufacturer() {
               </p>
               <input
                 required
-                value={initialData.name}
-                onChange={(e) => updateData({ name: e.target.value })}
+                value={manufacturerData.description}
+                onChange={handleInputChange}
                 type="text"
+                name="description"
                 placeholder="Description"
+                className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
+              />
+              <p className="lg:text-3xl  md: text-2xl sm: text-xl">
+                Image URL:
+              </p>
+              <input
+                required
+                value={manufacturerData.logo}
+                onChange={handleInputChange}
+                type="text"
+                name="logo"
+                placeholder="Image URL"
+                className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
+              />
+              <p className="lg:text-3xl  md: text-2xl sm: text-xl">Year:</p>
+              <input
+                required
+                value={manufacturerData.year}
+                onChange={handleInputChange}
+                type="number"
+                name="year"
+                placeholder="Type"
                 className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
               />
               <button

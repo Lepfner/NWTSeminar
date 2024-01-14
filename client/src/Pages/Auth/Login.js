@@ -1,5 +1,5 @@
 import SuccessPage from "./SuccessPage";
-//import axios from "../../api/axios";
+import axios from "../../api/axios";
 //import useAuth from "../../hooks/useAuth";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -8,38 +8,35 @@ import Typewriter from "typewriter-effect";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const navigate = useNavigate();
   //const { setAuth, isLoggedIn, setIsLoggedIn } = useAuth();
 
-  const handleSubmit = async (e) => { {/*
+  const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(
         "/login",
-        JSON.stringify({ email, password }),
+        JSON.stringify({email, password}),
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
         }
       );
       setIsLoggedIn(true);
-      localStorage.setItem("isLoggedIn", true);
-      const { id, is_admin } = response?.data;
-      setAuth({ email, password, id, is_admin });
+      const { is_admin } = response?.data;
       if (is_admin) {
-        navigate("/AdminLogin");
+        navigate("/products", {state: is_admin});
       } else {
-        navigate("/main");
+        navigate("/products", {state: is_admin});
       }
     } catch (err) {
       console.log(err);
     }
-
     setEmail("");
-setPassword(""); */}
-  };
+    setPassword("");
+  }
 
   return (
     <div
@@ -63,7 +60,7 @@ setPassword(""); */}
             className="w-full flex flex-col lg:text-lg md:flex-row text-base 
                             sm:flex-col "
           >
-            <form className="lg: w-4/5 max-md:w-full" onSubmit={handleSubmit}>
+            <form className="lg: w-4/5 max-md:w-full" onSubmit={handleLogin}>
               <p>E-mail:</p>
               <input
                 required
