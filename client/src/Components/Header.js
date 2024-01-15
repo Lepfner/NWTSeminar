@@ -6,10 +6,15 @@ import {
   faRightFromBracket,
   faLayerGroup,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 export default function Header() {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    navigate("/")
+  };
 
   return (
     <div className="font-pacifico w-full flex justify-center text-amber-800">
@@ -34,7 +39,7 @@ export default function Header() {
           <Link to="/newManufacturer">
             {location.state && <FontAwesomeIcon icon={faLayerGroup} size="2x" />}
           </Link>
-          <FontAwesomeIcon icon={faRightFromBracket} size="2x" />
+          <FontAwesomeIcon onClick={handleLogout} icon={faRightFromBracket} size="2x" />
         </div>
       </div>
     </div>

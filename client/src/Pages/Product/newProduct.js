@@ -1,27 +1,37 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
+import axios from "../../api/axios";
 import { Toaster } from "react-hot-toast";
-const initialData = {
-  name: "",
-  price: "",
-  image: "",
-  type: "",
-  desc: "",
-  ingredients: "",
-};
+import { useNavigate } from "react-router-dom";
 
 function NewProduct() {
-  const [formData, setFormData] = useState(initialData);
 
-  const updateData = (fields) => {
-    setFormData((prev) => {
-      return { ...prev, ...fields };
-    });
+  const navigate = useNavigate();
+
+  const [productData, setProductData] = useState({
+    name: '',
+    price: 0,
+    description: '',
+    logo: '',
+    type: '',
+    ingredients: '',
+    manufacturer: ''
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setProductData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-  };
 
+    try {
+      const response = await axios.post('/chocolateCreate', productData);
+      navigate("/manufacturers");
+    } catch (error) {
+      console.log(error)
+    }
+  };
   return (
     <div className="font-pacifico w-full flex flex-col items-center justify-between">
       <Toaster />
@@ -33,45 +43,27 @@ function NewProduct() {
       >
         <div className="w-full rounded-xl z-10">
           <div className="flex justify-center items-center">
-            <form
+          <form
               className="flex justify-center items-center flex-col lg: w-4/5 max-md:w-full"
               onSubmit={handleSubmit}
             >
-              <p className="lg:text-3xl md: text-2xl sm: text-xl">Name:</p>
+              <p className="lg:text-3xl  md: text-2xl sm: text-xl">Name:</p>
               <input
                 required
-                value={formData.name}
-                onChange={(e) => updateData({ name: e.target.value })}
+                value={productData.name}
+                onChange={handleInputChange}
                 type="text"
+                name="name"
                 placeholder="Name"
                 className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
               />
               <p className="lg:text-3xl  md: text-2xl sm: text-xl">Price:</p>
               <input
                 required
-                value={formData.price}
-                onChange={(e) => updateData({ price: e.target.value })}
-                type="text"
-                placeholder="Price"
-                className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
-              />
-              <p className="lg:text-3xl  md: text-2xl sm: text-xl">
-                Image URL:
-              </p>
-              <input
-                required
-                value={formData.image}
-                onChange={(e) => updateData({ image: e.target.value })}
-                type="text"
-                placeholder="Image URL"
-                className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
-              />
-              <p className="lg:text-3xl  md: text-2xl sm: text-xl">Type:</p>
-              <input
-                required
-                value={formData.type}
-                onChange={(e) => updateData({ type: e.target.value })}
-                type="text"
+                value={productData.price}
+                onChange={handleInputChange}
+                type="number"
+                name="price"
                 placeholder="Type"
                 className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
               />
@@ -80,10 +72,35 @@ function NewProduct() {
               </p>
               <input
                 required
-                value={formData.desc}
-                onChange={(e) => updateData({ desc: e.target.value })}
+                value={productData.description}
+                onChange={handleInputChange}
                 type="text"
+                name="description"
                 placeholder="Description"
+                className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
+              />
+              <p className="lg:text-3xl  md: text-2xl sm: text-xl">
+                Image URL:
+              </p>
+              <input
+                required
+                value={productData.logo}
+                onChange={handleInputChange}
+                type="text"
+                name="logo"
+                placeholder="Image URL"
+                className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
+              />
+              <p className="lg:text-3xl  md: text-2xl sm: text-xl">
+                Type:
+              </p>
+              <input
+                required
+                value={productData.type}
+                onChange={handleInputChange}
+                type="text"
+                name="type"
+                placeholder="Image URL"
                 className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
               />
               <p className="lg:text-3xl  md: text-2xl sm: text-xl">
@@ -91,10 +108,23 @@ function NewProduct() {
               </p>
               <input
                 required
-                value={formData.ingredients}
-                onChange={(e) => updateData({ ingredients: e.target.value })}
+                value={productData.ingredients}
+                onChange={handleInputChange}
                 type="text"
-                placeholder="Ingredients"
+                name="ingredients"
+                placeholder="Image URL"
+                className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
+              />
+              <p className="lg:text-3xl  md: text-2xl sm: text-xl">
+                Manufacturer:
+              </p>
+              <input
+                required
+                value={productData.manufacturer}
+                onChange={handleInputChange}
+                type="text"
+                name="manufacturer"
+                placeholder="Image URL"
                 className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
               />
               <button

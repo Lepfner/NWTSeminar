@@ -1,13 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const Chocolate = require("../models/Chocolate");
+const mongoose = require('mongoose');
+const Chocolate = require("../Models/chocolate");
 
 router.get('/chocolates', async (req, res) => {
   try {
     const chocolates = await Chocolate.find();
     res.status(200).json(chocolates);
   } catch (error) {
-    res.status(500).json({ message: 'Internal Server Error' });
+    res.status(500).json({ message: error });
   }
 });
 
@@ -23,12 +24,20 @@ router.get('/chocolate/:id', async (req, res) => {
   }
 });
 
-router.post("/chocolates", async (req, res) => {
+router.post("/chocolateCreate", async (req, res) => {
   try {
-    const newChocolate = await Chocolate.create(req.body);
+    const newChocolate = await Chocolate.create({
+      name: req.body.name,
+      price: req.body.price,
+      description: req.body.description,
+      logo: req.body.logo,
+      type: req.body.type,
+      ingredients: req.body.ingredients,
+      manufacturer: req.body.manufacturer
+    });
     res.status(201).json(newChocolate);
   } catch (error) {
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: error });
   }
 });
 
@@ -44,7 +53,7 @@ router.put("/chocolates/:id", async (req, res) => {
     }
     res.status(200).json(updatedChocolate);
   } catch (error) {
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: error });
   }
 });
 
@@ -56,7 +65,7 @@ router.delete("/chocolates/:id", async (req, res) => {
     }
     res.status(200).json({ message: "Chocolate deleted successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: error });
   }
 });
 

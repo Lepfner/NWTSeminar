@@ -15,7 +15,6 @@ router.get('/manufacturers', async (req, res) => {
 router.get('/manufacturer/:id', async (req, res) => {
   try {
     const manufacturer = await Manufacturer.findById(req.params.id);
-
     if (!manufacturer) {
       return res.status(404).json({ message: 'Manufacturer not found' });
     }
