@@ -17,6 +17,7 @@ function ProductForm({ isEditing }) {
     ingredients: '',
     manufacturer: ''
   });
+  const [manufacturersList, setManufacturersList] = useState([]);
 
   useEffect(() => {
     const result = checkToken();
@@ -25,17 +26,27 @@ function ProductForm({ isEditing }) {
     }
     const fetchProductData = async () => {
       try {
-        //TODO Promijeniti SLICE
-        const response = await axios.get(`/product/${window.location.href.slice(39,65)}`);
+        const response = await axios.get(`/chocolate/${window.location.href.slice(34,65)}`);
         setProductData(response.data);
       } catch (error) {
         console.log(error);
       }
     };
 
+    const fetchManufacturers = async () => {
+      try {
+        const response = await axios.get('/manufacturers');
+        setManufacturersList(response.data);
+      } catch (error) {
+        console.error('Error fetching manufacturers:', error);
+      }
+    };
+
     if (isEditing) {
       fetchProductData();
     }
+
+    fetchManufacturers();
   }, [isEditing, navigate, productId]);
 
   const handleInputChange = (e) => {
@@ -48,7 +59,7 @@ function ProductForm({ isEditing }) {
 
     try {
       if (isEditing) {
-        await axios.put(`/chocolates/${window.location.href.slice(39,65)}`, productData);
+        await axios.put(`/chocolates/${window.location.href.slice(34,65)}`, productData);
       } else {
         await axios.post('/chocolateCreate', productData);
       }
@@ -141,18 +152,21 @@ function ProductForm({ isEditing }) {
                 placeholder="Image URL"
                 className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
               />
-              <p className="lg:text-3xl  md: text-2xl sm: text-xl">
-                Manufacturer:
-              </p>
-              <input
+              <p className="lg:text-3xl md:text-2xl sm:text-xl">Manufacturer:</p>
+              <select
                 required
                 value={productData.manufacturer}
                 onChange={handleInputChange}
-                type="text"
                 name="manufacturer"
-                placeholder="Image URL"
                 className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
-              />
+              >
+                <option value="" disabled>Select a Manufacturer</option>
+                {manufacturersList.map(manufacturer => (
+                  <option key={manufacturer._id} value={manufacturer._id}>
+                    {manufacturer.name}
+                  </option>
+                ))}
+              </select>
               <button
                 type="submit"
                 className="block bg-[#50251f] px-4 rounded-md p-2 my-2 text-white 

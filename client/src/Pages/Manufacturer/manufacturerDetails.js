@@ -29,7 +29,7 @@ export default function ManufacturerDetails() {
     }
     const fetchManufacturerData = async () => {
       try {
-        const response = await axios.get(`/manufacturer/${window.location.href.slice(39,65)}`);
+        const response = await axios.get(`/manufacturer/${window.location.href.slice(35,65)}`);
         setManufacturerData(response.data);
       } catch (error) {
         console.log(error);

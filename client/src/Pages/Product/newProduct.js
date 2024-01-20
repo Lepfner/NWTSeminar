@@ -17,6 +17,7 @@ function NewProduct() {
     ingredients: '',
     manufacturer: ''
   });
+  const [manufacturersList, setManufacturersList] = useState([]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -28,7 +29,20 @@ function NewProduct() {
     if(!result){
       navigate("/")
     }
-  })
+  });
+
+  useEffect(() => {
+    const fetchManufacturers = async () => {
+      try {
+        const response = await axios.get('/manufacturers');
+        setManufacturersList(response.data);
+      } catch (error) {
+        console.error('Error fetching manufacturers:', error);
+      }
+    };
+
+    fetchManufacturers();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -123,18 +137,21 @@ function NewProduct() {
                 placeholder="Image URL"
                 className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
               />
-              <p className="lg:text-3xl  md: text-2xl sm: text-xl">
-                Manufacturer:
-              </p>
-              <input
+              <p className="lg:text-3xl md:text-2xl sm:text-xl">Manufacturer:</p>
+              <select
                 required
                 value={productData.manufacturer}
                 onChange={handleInputChange}
-                type="text"
                 name="manufacturer"
-                placeholder="Image URL"
                 className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
-              />
+              >
+                <option value="" disabled>Select a Manufacturer</option>
+                {manufacturersList.map(manufacturer => (
+                  <option key={manufacturer._id} value={manufacturer._id}>
+                    {manufacturer.name}
+                  </option>
+                ))}
+              </select>
               <button
                 type="submit"
                 className="block bg-[#50251f] px-4 rounded-md p-2 my-2 text-white 

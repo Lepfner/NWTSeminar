@@ -30,7 +30,7 @@ export default function Products() {
       <div className="flex justify-center">
         <div className="w-[90%] absolute top-0 grid grid-cols-3 justify-items-center mt-24">
           {items.map((item, index) => (
-            <Link to={`/chocolate/${item._id}`}>
+            <Link to={`/product/${item._id}`}>
               <div
                 className={`m-2 animate__animated animate__fadeInDown animate__delay-${
                   index + 1

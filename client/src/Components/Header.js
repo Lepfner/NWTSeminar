@@ -38,25 +38,25 @@ export default function Header() {
       <div className="w-[90%] flex flex-row justify-between items-center border-b border-gray-200 py-4">
         <div className="flex flex-1">
           <Link to="/products">
-            <img src={Logo} alt="" className="w-12" />
+            <img src={Logo} alt="" className="w-12 hover:animate-bounce" />
           </Link>
         </div>
         <div className="flex flex-row gap-4">
           <Link to="/products">
-            <div>Products</div>
+            <div className="hover:border-b hover:border-[#331713] duration-500">Products</div>
           </Link>
           <Link to="/manufacturers">
-            <div>Manufacturers</div>
+            <div className="hover:border-b hover:border-[#331713] duration-500">Manufacturers</div>
           </Link>
         </div>
         <div className="flex-1 flex flex-row gap-6 justify-end">
           <Link to="/newProduct">
-            {is_admin && <FontAwesomeIcon icon={faCookie} size="2x" />}
+            {is_admin && <FontAwesomeIcon className="hover:animate-spin" icon={faCookie} size="2x" />}
           </Link>
           <Link to="/newManufacturer">
-            {is_admin && <FontAwesomeIcon icon={faLayerGroup} size="2x" />}
+            {is_admin && <FontAwesomeIcon className="hover:animate-ping" icon={faLayerGroup} size="2x" />}
           </Link>
-          <FontAwesomeIcon className="cursor-pointer" onClick={handleLogout} icon={faRightFromBracket} size="2x" />
+          <FontAwesomeIcon className="cursor-pointer hover:animate-pulse" onClick={handleLogout} icon={faRightFromBracket} size="2x" />
         </div>
       </div>
     </div>
