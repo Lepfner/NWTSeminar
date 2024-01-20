@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const User = require("../Models/user");
+const jwt = require('jsonwebtoken');
 
 router.post("/login", async (req, res) => {
   try {
@@ -15,9 +16,32 @@ router.post("/login", async (req, res) => {
     if (!validPassword)
       return res.status(401).json({ message: "Authentication failed" });
 
-    res.status(200).json(user);
+    const token = jwt.sign(
+      { userId: user._id, email: user.email },
+      'your-secret-key',
+      { expiresIn: '1h' }
+    );
+
+    res.status(200).json({ token, user: user });
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+router.get('/user/:id', async (req, res) => {
+  try {
+    const userId = req.params.id;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json({ is_admin: user.is_admin });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 

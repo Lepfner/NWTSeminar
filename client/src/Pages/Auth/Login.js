@@ -23,13 +23,11 @@ const Login = () => {
         }
       );
       setIsLoggedIn(true);
-      const { is_admin } = response?.data;
+      const { _id } = response?.data.user;
+      localStorage.setItem('current', _id)
+      const token = response.data.token;
+      localStorage.setItem('token', token);
       navigate("/products")
-      if (is_admin) {
-        navigate("/products", {state: is_admin});
-      } else {
-        navigate("/products", {state: is_admin});
-      }
     } catch (err) {
       console.log(err);
     }

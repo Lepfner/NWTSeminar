@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "../../api/axios";
 import { Toaster } from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
+import checkToken from "../../api/checkAuth";
 
 function ProductForm({ isEditing }) {
   const navigate = useNavigate();
@@ -18,6 +19,10 @@ function ProductForm({ isEditing }) {
   });
 
   useEffect(() => {
+    const result = checkToken();
+    if(!result){
+      navigate("/")
+    }
     const fetchProductData = async () => {
       try {
         //TODO Promijeniti SLICE
@@ -31,7 +36,7 @@ function ProductForm({ isEditing }) {
     if (isEditing) {
       fetchProductData();
     }
-  }, [isEditing, productId]);
+  }, [isEditing, navigate, productId]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

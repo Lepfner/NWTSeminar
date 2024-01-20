@@ -1,7 +1,8 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import axios from "../../api/axios";
 import { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import checkToken from "../../api/checkAuth";
 
 function NewProduct() {
 
@@ -21,6 +22,13 @@ function NewProduct() {
     const { name, value } = e.target;
     setProductData((prevData) => ({ ...prevData, [name]: value }));
   };
+
+  useEffect(() => {
+    const result = checkToken();
+    if(!result){
+      navigate("/")
+    }
+  })
 
   const handleSubmit = async (e) => {
     e.preventDefault();

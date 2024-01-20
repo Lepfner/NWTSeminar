@@ -11,7 +11,7 @@ import ManufacturerDetails from "./Pages/Manufacturer/manufacturerDetails";
 import NewProduct from "./Pages/Product/newProduct";
 import NewManufacturer from "./Pages/Manufacturer/newManufacturer";
 import { EditManufacturer } from "./Pages/Manufacturer/editManufacturer";
-import EditProduct from './Pages/Product/editProduct'
+import { EditProduct } from './Pages/Product/editProduct';
 
 function App() {
   return (

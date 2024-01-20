@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Logo from "../Assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -6,15 +6,32 @@ import {
   faRightFromBracket,
   faLayerGroup,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from "../api/axios";
 
 export default function Header() {
-  const location = useLocation();
   const navigate = useNavigate();
+  const [is_admin, setIsAdmin] = useState(false)
 
   const handleLogout = () => {
+    localStorage.removeItem('token');
     navigate("/")
   };
+
+  useEffect(() => {
+    const fetchUserInformation = async () => {
+      if (localStorage.getItem('token')) {
+        try {
+          const response = await axios.get(`/user/${localStorage.getItem('current')}`);
+          setIsAdmin(response.data.is_admin);
+        } catch (error) {
+          console.error('Error fetching user information:', error);
+        }
+      }
+    };
+
+    fetchUserInformation();
+  }, []);
 
   return (
     <div className="font-pacifico w-full flex justify-center text-amber-800">
@@ -34,12 +51,12 @@ export default function Header() {
         </div>
         <div className="flex-1 flex flex-row gap-6 justify-end">
           <Link to="/newProduct">
-            {location.state && <FontAwesomeIcon icon={faCookie} size="2x" />}
+            {is_admin && <FontAwesomeIcon icon={faCookie} size="2x" />}
           </Link>
           <Link to="/newManufacturer">
-            {location.state && <FontAwesomeIcon icon={faLayerGroup} size="2x" />}
+            {is_admin && <FontAwesomeIcon icon={faLayerGroup} size="2x" />}
           </Link>
-          <FontAwesomeIcon onClick={handleLogout} icon={faRightFromBracket} size="2x" />
+          <FontAwesomeIcon className="cursor-pointer" onClick={handleLogout} icon={faRightFromBracket} size="2x" />
         </div>
       </div>
     </div>

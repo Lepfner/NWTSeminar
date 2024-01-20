@@ -1,7 +1,8 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import axios from "../../api/axios";
 import { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import checkToken from "../../api/checkAuth";
 
 function NewManufacturer() {
 
@@ -19,6 +20,13 @@ function NewManufacturer() {
     const { name, value } = e.target;
     setManufacturerData((prevData) => ({ ...prevData, [name]: value }));
   };
+
+  useEffect(() => {
+    const result = checkToken();
+    if(!result){
+      navigate("/")
+    }
+  })
 
   const handleSubmit = async (e) => {
     e.preventDefault();

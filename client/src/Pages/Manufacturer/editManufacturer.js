@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "../../api/axios";
 import { Toaster } from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
+import checkToken from "../../api/checkAuth";
 
 function ManufacturerForm({ isEditing }) {
   const navigate = useNavigate();
@@ -16,6 +17,10 @@ function ManufacturerForm({ isEditing }) {
   });
 
   useEffect(() => {
+    const result = checkToken();
+    if(!result){
+      navigate("/")
+    }
     const fetchManufacturerData = async () => {
       try {
         const response = await axios.get(`/manufacturer/${window.location.href.slice(39,65)}`);
@@ -28,7 +33,7 @@ function ManufacturerForm({ isEditing }) {
     if (isEditing) {
       fetchManufacturerData();
     }
-  }, [isEditing, manufacturerId]);
+  }, [isEditing, manufacturerId, navigate]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
