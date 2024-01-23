@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require('mongoose');
 const Manufacturer = require("../models/Manufacturer");
+const Chocolate = require("../Models/chocolate")
 
 router.get('/manufacturers', async (req, res) => {
   try {
@@ -57,15 +58,17 @@ router.put("/manufacturers/:id", async (req, res) => {
 
 router.delete("/manufacturers/:id", async (req, res) => {
   try {
-    const deletedManufacturer = await Manufacturer.findByIdAndDelete(
-      req.params.id
-    );
+    const chocolatesWithManufacturer = await Chocolate.find({ manufacturer: req.params.id });
+    if (chocolatesWithManufacturer.length > 0) {
+      return res.status(400).json({ message: "Manufacturer is associated with chocolates. Delete chocolates first." });
+    }
+    const deletedManufacturer = await Manufacturer.findByIdAndDelete(req.params.id);
     if (!deletedManufacturer) {
       return res.status(404).json({ message: "Manufacturer not found" });
     }
     res.status(200).json({ message: "Manufacturer deleted successfully" });
   } catch (error) {
-    res.status(500).json({ message: error });
+    res.status(500).json({ message: error.message });
   }
 });
 

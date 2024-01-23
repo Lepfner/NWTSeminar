@@ -49,7 +49,7 @@ function NewProduct() {
 
     try {
       const response = await axios.post('/chocolateCreate', productData);
-      navigate("/manufacturers");
+      navigate("/products");
     } catch (error) {
       console.log(error)
     }
@@ -122,7 +122,7 @@ function NewProduct() {
                 onChange={handleInputChange}
                 type="text"
                 name="type"
-                placeholder="Image URL"
+                placeholder="Type"
                 className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
               />
               <p className="lg:text-3xl  md: text-2xl sm: text-xl">
@@ -134,7 +134,7 @@ function NewProduct() {
                 onChange={handleInputChange}
                 type="text"
                 name="ingredients"
-                placeholder="Image URL"
+                placeholder="Ingredients"
                 className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
               />
               <p className="lg:text-3xl md:text-2xl sm:text-xl">Manufacturer:</p>
