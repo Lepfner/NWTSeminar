@@ -18,12 +18,12 @@ function isTokenExpired() {
   }
 }
 
-function checkToken(){
-    if (isTokenExpired()) {
-        return false
-      } else {
-        return true
-      }
+function checkToken() {
+  if (isTokenExpired()) {
+    return false;
+  } else {
+    return true;
+  }
 }
 
 export default checkToken;

@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import "../../Styles/wave.css";
-import Dorina from "../../Assets/dorina.png";
 import "animate.css";
 import axios from '../../api/axios'
 import { Link, useParams, useNavigate } from "react-router-dom";
@@ -46,7 +45,7 @@ export default function ManufacturerDetails() {
             <div className="w-full rounded-xl opacity-90 hover:opacity-100 mt-20 flex flex-row align-center">
               <img
                 alt=""
-                src={Dorina}
+                src={manufacturerData.logo}
                 className="py-12 px-4 duration-500 hover:h-[32rem] hover:w-[24rem] h-96 w-80"
               />
               <div className="flex flex-col items-start">

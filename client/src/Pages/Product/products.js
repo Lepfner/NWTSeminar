@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "../../api/axios";
 import "../../Styles/wave.css";
-import Dorina from "../../Assets/dorina.png";
 import "animate.css";
 import { Link, useNavigate } from "react-router-dom";
 import checkToken from "../../api/checkAuth";
@@ -38,7 +37,7 @@ export default function Products() {
               >
                 <img
                   alt=""
-                  src={Dorina}
+                  src={item.logo}
                   className="bg-gray-200 py-12 px-4 opacity-90
           hover:opacity-100 duration-500 hover:h-[32rem] hover:w-[24rem] rounded-xl h-96 w-80"
                 />

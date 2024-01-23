@@ -1,6 +1,5 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import "../../Styles/wave.css";
-import Dorina from "../../Assets/dorina.png";
 import "animate.css";
 import axios from '../../api/axios'
 import { Link, useParams, useNavigate } from "react-router-dom";
@@ -11,12 +10,26 @@ export default function ProductDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  const [productData, setProductData] = useState({});
+  const [manufacturer, setManufacturer] = useState("")
+
   useEffect(() => {
     const result = checkToken();
     if(!result){
       navigate("/")
     }
-  })
+    const fetchProductData = async () => {
+      try{
+        const response = await axios.get(`/chocolate/${window.location.href.slice(30,65)}`);
+        const secondResponse = await axios.get(`/manufacturer/${response.data.manufacturer}`);
+        setManufacturer(secondResponse.data.name)
+        setProductData(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchProductData()
+  }, [navigate])
 
   const handleDelete = async (id) => {
     try {
@@ -35,22 +48,27 @@ export default function ProductDetails() {
             <div className="w-full rounded-xl opacity-90 hover:opacity-100 mt-20 flex flex-row align-center">
               <img
                 alt=""
-                src={Dorina}
+                src={productData.logo}
                 className="py-12 px-4 duration-500 hover:h-[32rem] hover:w-[24rem] h-96 w-80"
               />
               <div className="flex flex-col items-start">
+              <h1 className="text-3xl text-white">
+                  {productData.name}
+                </h1>
                 <h1 className="text-3xl text-white">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Maecenas quis ex eget enim eleifend mollis at a mi. Fusce
-                  accumsan massa diam, a luctus mi rhoncus in. Phasellus commodo
-                  finibus mi id consequat. Nam leo justo, faucibus et neque ut,
-                  bibendum venenatis lacus. Praesent vitae mollis ex. Nunc vitae
-                  tellus sed ligula rutrum varius eget cursus enim. Fusce
-                  venenatis erat at tellus sollicitudin, interdum finibus ex
-                  sodales. Sed ac dolor tincidunt, feugiat ante nec, facilisis
-                  nunc. In hac habitasse platea dictumst. Etiam interdum commodo
-                  est. Etiam sem nisl, egestas ac ante dapibus, pharetra sodales
-                  libero. Nulla facilisi.
+                  {productData.price}
+                </h1>
+                <h1 className="text-3xl text-white">
+                  {productData.description}
+                </h1>
+                <h1 className="text-3xl text-white">
+                  {productData.type}
+                </h1>
+                <h1 className="text-3xl text-white">
+                  Ingredients: {productData.ingredients}
+                </h1>
+                <h1 className="text-3xl text-white">
+                  {manufacturer}
                 </h1>
                 <div>
                 <Link to={`/editProduct/${id}`}>
