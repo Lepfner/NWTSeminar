@@ -30,6 +30,10 @@ const chocolateSchema = new mongoose.Schema({
     ref: 'Manufacturer',
     required: true,
   },
+  manufacturerName: {
+    type: String,
+    required: true
+  }
 });
 
 const Chocolate = mongoose.model('Chocolate', chocolateSchema);

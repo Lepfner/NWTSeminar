@@ -33,7 +33,8 @@ router.post("/chocolateCreate", async (req, res) => {
       logo: req.body.logo,
       type: req.body.type,
       ingredients: req.body.ingredients,
-      manufacturer: req.body.manufacturer
+      manufacturer: req.body.manufacturer,
+      manufacturerName: req.body.manufacturerName
     });
     res.status(201).json(newChocolate);
   } catch (error) {

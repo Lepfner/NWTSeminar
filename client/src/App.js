@@ -11,26 +11,47 @@ import ManufacturerDetails from "./Pages/Manufacturer/manufacturerDetails";
 import NewProduct from "./Pages/Product/newProduct";
 import NewManufacturer from "./Pages/Manufacturer/newManufacturer";
 import { EditManufacturer } from "./Pages/Manufacturer/editManufacturer";
-import { EditProduct } from './Pages/Product/editProduct';
+import { EditProduct } from "./Pages/Product/editProduct";
+import { useEffect, useState } from "react";
+import axios from "./api/axios";
 
 function App() {
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    const fetchRoles = async () => {
+      const response = await axios.get(
+        `/user/${localStorage.getItem("current")}`
+      );
+      setIsAdmin(response.data.is_admin);
+    };
+    fetchRoles();
+  });
+
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/products" element={<Products />} />
           <Route path="/manufacturers" element={<Manufacturers />} />
-          <Route path="/product/:id" element={<ProductDetails/>} />
-          <Route path="/manufacturer/:id" element={<ManufacturerDetails/>} />
+          <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="/manufacturer/:id" element={<ManufacturerDetails />} />
         </Route>
-        <Route element={<AuthLayout/>}>
+        <Route element={<AuthLayout />}>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Route>
-        <Route path="/newProduct" element={<NewProduct/>} />
-        <Route path="/newManufacturer" element={<NewManufacturer/>} />
-        <Route path="/editProduct/:id" element={<EditProduct/>} />
-        <Route path="/editManufacturer/:id" element={<EditManufacturer/>} />
+        {isAdmin && (
+          <>
+            <Route path="/newProduct" element={<NewProduct />} />
+            <Route path="/newManufacturer" element={<NewManufacturer />} />
+            <Route path="/editProduct/:id" element={<EditProduct />} />
+            <Route
+              path="/editManufacturer/:id"
+              element={<EditManufacturer />}
+            />
+          </>
+        )}
       </Routes>
     </BrowserRouter>
   );

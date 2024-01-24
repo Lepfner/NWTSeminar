@@ -1,43 +1,54 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import axios from "../../api/axios";
 import { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import checkToken from "../../api/checkAuth";
 
 function NewProduct() {
-
   const navigate = useNavigate();
 
   const [productData, setProductData] = useState({
-    name: '',
+    name: "",
     price: 0,
-    description: '',
-    logo: '',
-    type: '',
-    ingredients: '',
-    manufacturer: ''
+    description: "",
+    logo: "",
+    type: "",
+    ingredients: "",
+    manufacturer: "",
+    manufacturerName: "",
   });
   const [manufacturersList, setManufacturersList] = useState([]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setProductData((prevData) => ({ ...prevData, [name]: value }));
+    if (name === "manufacturer") {
+      const selectedManufacturer = manufacturersList.find(
+        (manufacturer) => manufacturer._id === value
+      );
+      setProductData((prevData) => ({
+        ...prevData,
+        manufacturer: value,
+        manufacturerName: selectedManufacturer ? selectedManufacturer.name : "",
+      }));
+    } else {
+      setProductData((prevData) => ({ ...prevData, [name]: value }));
+    }
   };
 
   useEffect(() => {
     const result = checkToken();
-    if(!result){
-      navigate("/")
+    if (!result) {
+      navigate("/");
     }
   });
 
   useEffect(() => {
     const fetchManufacturers = async () => {
       try {
-        const response = await axios.get('/manufacturers');
+        const response = await axios.get("/manufacturers");
         setManufacturersList(response.data);
       } catch (error) {
-        console.error('Error fetching manufacturers:', error);
+        console.error("Error fetching manufacturers:", error);
       }
     };
 
@@ -48,10 +59,10 @@ function NewProduct() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('/chocolateCreate', productData);
+      const response = await axios.post("/chocolateCreate", productData);
       navigate("/products");
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
   return (
@@ -65,7 +76,7 @@ function NewProduct() {
       >
         <div className="w-full rounded-xl z-10">
           <div className="flex justify-center items-center">
-          <form
+            <form
               className="flex justify-center items-center flex-col lg: w-4/5 max-md:w-full"
               onSubmit={handleSubmit}
             >
@@ -113,9 +124,7 @@ function NewProduct() {
                 placeholder="Image URL"
                 className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
               />
-              <p className="lg:text-3xl  md: text-2xl sm: text-xl">
-                Type:
-              </p>
+              <p className="lg:text-3xl  md: text-2xl sm: text-xl">Type:</p>
               <input
                 required
                 value={productData.type}
@@ -137,7 +146,9 @@ function NewProduct() {
                 placeholder="Ingredients"
                 className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
               />
-              <p className="lg:text-3xl md:text-2xl sm:text-xl">Manufacturer:</p>
+              <p className="lg:text-3xl md:text-2xl sm:text-xl">
+                Manufacturer:
+              </p>
               <select
                 required
                 value={productData.manufacturer}
@@ -145,8 +156,10 @@ function NewProduct() {
                 name="manufacturer"
                 className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
               >
-                <option value="" disabled>Select a Manufacturer</option>
-                {manufacturersList.map(manufacturer => (
+                <option value="" disabled>
+                  Select a Manufacturer
+                </option>
+                {manufacturersList.map((manufacturer) => (
                   <option key={manufacturer._id} value={manufacturer._id}>
                     {manufacturer.name}
                   </option>

@@ -9,24 +9,27 @@ function ProductForm({ isEditing }) {
   const { productId } = useParams();
 
   const [productData, setProductData] = useState({
-    name: '',
+    name: "",
     price: 0,
-    description: '',
-    logo: '',
-    type: '',
-    ingredients: '',
-    manufacturer: ''
+    description: "",
+    logo: "",
+    type: "",
+    ingredients: "",
+    manufacturer: "",
+    manufacturerName: "",
   });
   const [manufacturersList, setManufacturersList] = useState([]);
 
   useEffect(() => {
     const result = checkToken();
-    if(!result){
-      navigate("/")
+    if (!result) {
+      navigate("/");
     }
     const fetchProductData = async () => {
       try {
-        const response = await axios.get(`/chocolate/${window.location.href.slice(34,65)}`);
+        const response = await axios.get(
+          `/chocolate/${window.location.href.slice(34, 65)}`
+        );
         setProductData(response.data);
       } catch (error) {
         console.log(error);
@@ -35,10 +38,10 @@ function ProductForm({ isEditing }) {
 
     const fetchManufacturers = async () => {
       try {
-        const response = await axios.get('/manufacturers');
+        const response = await axios.get("/manufacturers");
         setManufacturersList(response.data);
       } catch (error) {
-        console.error('Error fetching manufacturers:', error);
+        console.error("Error fetching manufacturers:", error);
       }
     };
 
@@ -51,7 +54,18 @@ function ProductForm({ isEditing }) {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setProductData((prevData) => ({ ...prevData, [name]: value }));
+    if (name === "manufacturer") {
+      const selectedManufacturer = manufacturersList.find(
+        (manufacturer) => manufacturer._id === value
+      );
+      setProductData((prevData) => ({
+        ...prevData,
+        manufacturer: value,
+        manufacturerName: selectedManufacturer ? selectedManufacturer.name : "",
+      }));
+    } else {
+      setProductData((prevData) => ({ ...prevData, [name]: value }));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -59,9 +73,12 @@ function ProductForm({ isEditing }) {
 
     try {
       if (isEditing) {
-        await axios.put(`/chocolates/${window.location.href.slice(34,65)}`, productData);
+        await axios.put(
+          `/chocolates/${window.location.href.slice(34, 65)}`,
+          productData
+        );
       } else {
-        await axios.post('/chocolateCreate', productData);
+        await axios.post("/chocolateCreate", productData);
       }
       navigate("/products");
     } catch (error) {
@@ -80,7 +97,7 @@ function ProductForm({ isEditing }) {
       >
         <div className="w-full rounded-xl z-10">
           <div className="flex justify-center items-center">
-          <form
+            <form
               className="flex justify-center items-center flex-col lg: w-4/5 max-md:w-full"
               onSubmit={handleSubmit}
             >
@@ -128,9 +145,7 @@ function ProductForm({ isEditing }) {
                 placeholder="Image URL"
                 className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
               />
-              <p className="lg:text-3xl  md: text-2xl sm: text-xl">
-                Type:
-              </p>
+              <p className="lg:text-3xl  md: text-2xl sm: text-xl">Type:</p>
               <input
                 required
                 value={productData.type}
@@ -152,7 +167,9 @@ function ProductForm({ isEditing }) {
                 placeholder="Image URL"
                 className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
               />
-              <p className="lg:text-3xl md:text-2xl sm:text-xl">Manufacturer:</p>
+              <p className="lg:text-3xl md:text-2xl sm:text-xl">
+                Manufacturer:
+              </p>
               <select
                 required
                 value={productData.manufacturer}
@@ -160,8 +177,10 @@ function ProductForm({ isEditing }) {
                 name="manufacturer"
                 className="h-14 px-2 rounded-lg bg-gray-300 mb-4 w-full lg:w-4/5 md:w-4/5"
               >
-                <option value="" disabled>Select a Manufacturer</option>
-                {manufacturersList.map(manufacturer => (
+                <option value="" disabled>
+                  Select a Manufacturer
+                </option>
+                {manufacturersList.map((manufacturer) => (
                   <option key={manufacturer._id} value={manufacturer._id}>
                     {manufacturer.name}
                   </option>
@@ -172,7 +191,7 @@ function ProductForm({ isEditing }) {
                 className="block bg-[#50251f] px-4 rounded-md p-2 my-2 text-white 
                                   hover:bg-[#331713]"
               >
-                {isEditing ? 'Update' : 'Create'}
+                {isEditing ? "Update" : "Create"}
               </button>
             </form>
           </div>

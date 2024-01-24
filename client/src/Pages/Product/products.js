@@ -12,13 +12,16 @@ export default function Products() {
 
   useEffect(() => {
     const result = checkToken();
-    if(!result){
-      navigate("/")
+    if (!result) {
+      navigate("/");
     }
     axios
       .get("/chocolates")
       .then((response) => {
-        setItems(response.data);
+        const sortedItems = response.data.sort((a, b) => {
+          return a.manufacturerName.localeCompare(b.manufacturerName);
+        });
+        setItems(sortedItems);
       })
       .catch((error) => {
         console.error("GET Error:", error);
